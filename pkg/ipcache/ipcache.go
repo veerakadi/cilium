@@ -14,6 +14,7 @@ import (
 	"github.com/cilium/cilium/pkg/identity/cache"
 	ipcacheTypes "github.com/cilium/cilium/pkg/ipcache/types"
 	"github.com/cilium/cilium/pkg/labels"
+	"github.com/cilium/cilium/pkg/labels/cidr"
 	"github.com/cilium/cilium/pkg/lock"
 	"github.com/cilium/cilium/pkg/logging/logfields"
 	"github.com/cilium/cilium/pkg/metrics"
@@ -444,6 +445,26 @@ func (ipc *IPCache) RemoveMetadata(prefix netip.Prefix, resource ipcacheTypes.Re
 	ipc.metadata.remove(prefix, resource, aux...)
 	ipc.metadata.Unlock()
 	ipc.metadata.enqueuePrefixUpdates(prefix)
+	ipc.TriggerLabelInjection()
+}
+
+func (ipc *IPCache) UpsertPrefixes(prefixes []netip.Prefix, src source.Source, resource ipcacheTypes.ResourceID) {
+	ipc.metadata.Lock()
+	for _, p := range prefixes {
+		ipc.metadata.upsertLocked(p, src, resource, cidr.GetCIDRLabels(p))
+		ipc.metadata.enqueuePrefixUpdates(p)
+	}
+	ipc.metadata.Unlock()
+	ipc.TriggerLabelInjection()
+}
+
+func (ipc *IPCache) RemovePrefixes(prefixes []netip.Prefix, src source.Source, resource ipcacheTypes.ResourceID) {
+	ipc.metadata.Lock()
+	for _, p := range prefixes {
+		ipc.metadata.remove(p, resource, cidr.GetCIDRLabels(p))
+		ipc.metadata.enqueuePrefixUpdates(p)
+	}
+	ipc.metadata.Unlock()
 	ipc.TriggerLabelInjection()
 }
 
