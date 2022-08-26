@@ -10,7 +10,7 @@ semver==2.13.0
 myst-parser==0.18.0
 # Fork openapi until it uses something newer than unmaintained m2r
 # (See git logs for details)
-sphinxcontrib-openapi @ git+https://github.com/cilium/openapi.git@a1d4fca2e7c3ae3cca69593baade1ebc297a12ff
+sphinxcontrib-openapi @ git+https://github.com/flokli/sphinxcontrib-openapi@fix-collections
 sphinx-tabs==3.4.0
 sphinx-version-warning==1.1.2
 sphinxcontrib-spelling==7.6.0
