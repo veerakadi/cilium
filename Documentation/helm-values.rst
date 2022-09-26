@@ -460,7 +460,7 @@
    * - dnsProxy.minTtl
      - The minimum time, in seconds, to use DNS data for toFQDNs policies.
      - int
-     - ``3600``
+     - ``0``
    * - dnsProxy.preCache
      - DNS cache data at this path is preloaded on agent startup.
      - string
