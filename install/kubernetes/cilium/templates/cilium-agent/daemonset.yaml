@@ -200,6 +200,16 @@ spec:
               name: cilium-config
               key: custom-cni-conf
               optional: true
+        {{/* TODO(chance): Separate agent and operator configmaps, and move
+            these options into them */}}
+        {{- if .Values.pprof.enabled }}
+        - name: CILIUM_PPROF
+          value: {{ .Values.pprof.enabled | quote }}
+        - name: CILIUM_PPROF_ADDRESS
+          value: {{ .Values.pprof.address | quote }}
+        - name: CILIUM_PPROF_PORT
+          value: {{ .Values.pprof.port | quote }}
+        {{- end }}
         {{- if .Values.k8sServiceHost }}
         - name: KUBERNETES_SERVICE_HOST
           value: {{ .Values.k8sServiceHost | quote }}

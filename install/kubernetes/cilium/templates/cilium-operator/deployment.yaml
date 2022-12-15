@@ -78,6 +78,16 @@ spec:
               key: debug
               name: cilium-config
               optional: true
+        {{/* TODO(chance): Separate agent and operator configmaps, and move
+            these options into them */}}
+        {{- if .Values.operator.pprof.enabled }}
+        - name: CILIUM_PPROF
+          value: {{ .Values.operator.pprof.enabled | quote }}
+        - name: CILIUM_PPROF_ADDRESS
+          value: {{ .Values.operator.pprof.address | quote }}
+        - name: CILIUM_PPROF_PORT
+          value: {{ .Values.operator.pprof.port | quote }}
+        {{- end }}
         {{- if and .Values.eni.enabled (not .Values.eni.iamRole ) }}
         - name: AWS_ACCESS_KEY_ID
           valueFrom:

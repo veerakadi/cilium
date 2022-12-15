@@ -659,9 +659,6 @@ data:
   arping-refresh-period: {{ include "validateDuration" .Values.l2NeighDiscovery.refreshPeriod | quote }}
 {{- end }}
 
-{{- if and .Values.pprof .Values.pprof.enabled }}
-  pprof: {{ .Values.pprof.enabled | quote }}
-{{- end }}
 {{- if .Values.logSystemLoad }}
   log-system-load: {{ .Values.logSystemLoad | quote }}
 {{- end }}

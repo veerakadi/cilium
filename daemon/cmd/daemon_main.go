@@ -752,6 +752,9 @@ func initializeFlags() {
 	flags.Bool(option.PProf, false, "Enable serving the pprof debugging API")
 	option.BindEnv(Vp, option.PProf)
 
+	flags.String(option.PProfAddress, defaults.PprofAddressAgent, "Address that the pprof listens on")
+	option.BindEnv(Vp, option.PProfAddress)
+
 	flags.Int(option.PProfPort, defaults.PprofPortAgent, "Port that the pprof listens on")
 	option.BindEnv(Vp, option.PProfPort)
 
@@ -1200,7 +1203,7 @@ func initEnv() {
 	}
 
 	if option.Config.PProf {
-		pprof.Enable(option.Config.PProfPort)
+		pprof.Enable(option.Config.PProfAddress, option.Config.PProfPort)
 	}
 
 	if option.Config.PreAllocateMaps {

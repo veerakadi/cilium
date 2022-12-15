@@ -111,6 +111,9 @@ const (
 	// PProf enabled pprof debugging endpoint
 	PProf = "pprof"
 
+	// PProfAddress is the port that the pprof listens on
+	PProfAddress = "pprof-address"
+
 	// PProfPort is the port that the pprof listens on
 	PProfPort = "pprof-port"
 
@@ -366,6 +369,9 @@ type OperatorConfig struct {
 	// PProf enables pprof debugging endpoint
 	PProf bool
 
+	// PProfAddress is the address that the pprof listens on
+	PProfAddress string
+
 	// PProfPort is the port that the pprof listens on
 	PProfPort int
 
@@ -589,6 +595,7 @@ func (c *OperatorConfig) Populate(vp *viper.Viper) {
 	c.OperatorAPIServeAddr = vp.GetString(OperatorAPIServeAddr)
 	c.OperatorPrometheusServeAddr = vp.GetString(OperatorPrometheusServeAddr)
 	c.PProf = vp.GetBool(PProf)
+	c.PProfAddress = vp.GetString(PProfAddress)
 	c.PProfPort = vp.GetInt(PProfPort)
 	c.SyncK8sServices = vp.GetBool(SyncK8sServices)
 	c.SyncK8sNodes = vp.GetBool(SyncK8sNodes)
